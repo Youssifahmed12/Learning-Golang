@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestNewDeck(t *testing.T) {
 	d := newDeck()
@@ -12,5 +14,16 @@ func TestNewDeck(t *testing.T) {
 	}
 	if d[len(d)-1] != "Four of Clubs" {
 		t.Errorf("Expected first element to be 'Four of Clubs' but got %v instead", d[0])
+	}
+}
+
+func TestSaveToFileNewDeckFromFile(t *testing.T) {
+	fn := t.TempDir() + "/_decktesting.txt"
+	d := newDeck()
+	d.saveToFile(fn)
+	loadedDeck := newDeckFromFile(fn)
+
+	if len(loadedDeck) != 16 {
+		t.Errorf("Expected 16 cards got %v", len(loadedDeck))
 	}
 }
