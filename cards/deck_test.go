@@ -3,8 +3,14 @@ package main
 import "testing"
 
 func TestNewDeck(t *testing.T) {
-	deck := newDeck()
-	if len(deck) != 16 {
-		t.Errorf("Expected deck length of 16, but got %v", len(deck))
+	d := newDeck()
+	if len(d) != 16 {
+		t.Errorf("Expected deck length of 16, but got %v", len(d))
+	}
+	if d[0] != "Ace of Diamonds" {
+		t.Errorf("Expected first element to be 'Ace of diamonds' but got %v instead", d[0])
+	}
+	if d[len(d)-1] != "Four of Clubs" {
+		t.Errorf("Expected first element to be 'Four of Clubs' but got %v instead", d[0])
 	}
 }
