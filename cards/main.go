@@ -1,6 +1,12 @@
 package main
 
+import "fmt"
+
 func main() {
-	card := newDeckFromFile("my_cards.txt")
+	card := newDeck()
+	card.shuffle()
+	card.print()
+	fmt.Println("==============")
+	card.shuffle()
 	card.print()
 }
