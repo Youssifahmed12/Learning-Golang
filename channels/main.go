@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -16,8 +17,11 @@ func main() {
 		go checkLink(link, c)
 	}
 
-	for i := 0; i < len(links); i++ {
-		fmt.Println(<-c)
+	for l := range c {
+		go func(link string) {
+			time.Sleep(5 * time.Second)
+			checkLink(link, c)
+		}(l)
 	}
 }
 
@@ -25,16 +29,16 @@ func checkLink(l string, c chan string) {
 	resp, err := http.Get(l)
 	if err != nil {
 		fmt.Println(l, err)
-		c <- "Error Occured"
+		c <- l
 		return
 	}
 	if resp.StatusCode != 200 {
 		fmt.Println(l, "something wrong happened")
-		c <- "definitely something wrong"
+		c <- l
 		return
 	}
 
 	fmt.Println(l, "is available")
-	c <- "all perfect"
+	c <- l
 
 }
